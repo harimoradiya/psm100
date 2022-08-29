@@ -28,7 +28,7 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
       appBar: AppBar(
         title: Text("Explore",
         style: TextStyle(color: Colors.black),),
-        bottom: PreferredSize(preferredSize: Size.fromHeight(60),
+        bottom: PreferredSize(preferredSize: Size.fromHeight(40),
             child: Container(
               child: SafeArea(
                 child: Padding(

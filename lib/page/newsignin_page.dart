@@ -61,7 +61,7 @@ class _NewSignInPageState extends State<NewSignInPage> {
     ));
     return SlideTransition(
       position: _firstHalfAnimation,
-      child: SlideTransition(
+      child: SlideTransition(transformHitTests: false,
         position: _secondHalfAnimation,
         child: Padding(
           padding: const EdgeInsets.only(bottom: 100),

@@ -9,10 +9,8 @@ class Config {
   final String personImage = 'https://www.svgrepo.com/show/326296/person.svg';
   final String guestUserImage =
       'http://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png';
-
   // -- Onesignal Push Notification
   final String onesignalAppId = 'your_onesignal_app_id';
-
   //-- admob ads -- (these are test ids - you can use these admob ids for testing purposes)
   final String admobAppId = 'ca-app-pub-3940256099942544~3347511713';
   final String admobInterstitialAdId = 'ca-app-pub-3940256099942544/1033173712';

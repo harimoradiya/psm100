@@ -133,6 +133,7 @@ class _HomePageState extends State<HomePage> {
                             enlargeCenterPage: true,
                             enableInfiniteScroll: false,
                             height: h * 0.80,
+                            autoPlay: true,
                             onPageChanged: (int index, reason) {
                               setState(() => listIndex = index);
                             }),
@@ -170,10 +171,11 @@ class _HomePageState extends State<HomePage> {
                                                 fit: BoxFit.cover)),
                                         child: Padding(
                                             padding: const EdgeInsets.only(
-                                                left: 30, bottom: 40),
+                                                left: 30, bottom: 40,right: 10,
+                                            top:15),
                                             child: Row(
                                               crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
+                                                  CrossAxisAlignment.start,
                                               children: <Widget>[
                                                 Column(
                                                   mainAxisAlignment:
@@ -206,6 +208,7 @@ class _HomePageState extends State<HomePage> {
                                                 ),
                                                 Spacer(),
                                                 Icon(
+
                                                   Icons.favorite,
                                                   size: 25,
                                                   color: Colors.white
@@ -254,6 +257,7 @@ class _HomePageState extends State<HomePage> {
                           );
                         }).toList(),
                       ),
+
                       Positioned(
                         top: 40,
                         left: w * 0.23,
