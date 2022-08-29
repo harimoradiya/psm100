@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:wallpaper/blocs/signin_bloc.dart';
 import 'package:wallpaper/page/categories_page.dart';
 import 'package:wallpaper/page/explore_page.dart';
@@ -19,7 +20,6 @@ import '../widget/loading_animation.dart';
 import 'bookmark_page.dart';
 import 'details_page.dart';
 
-
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
 
@@ -31,15 +31,13 @@ class _HomePageState extends State<HomePage> {
   int listIndex = 0;
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-
-
   Future getData() async {
     Future.delayed(Duration(milliseconds: 0)).then((f) {
       final sb = context.read<SignInBloc>();
       final db = context.read<DataBloc>();
-      sb.getUserDataFromSP()
+      sb
+          .getUserDataFromSP()
           .then((value) => db.getData())
-          .then((value) => db.getContent())
           .then((value) => db.getCategories());
     });
   }
@@ -78,7 +76,7 @@ class _HomePageState extends State<HomePage> {
                         children: <Widget>[
                           IconButton(
                             icon: Icon(
-                              Icons.menu,
+                              FontAwesomeIcons.bars,
                               size: 20,
                             ),
                             onPressed: () {
@@ -86,9 +84,9 @@ class _HomePageState extends State<HomePage> {
                             },
                           ),
                           Text(
-                            Config().appName,
+                            "PSM100",
                             style: TextStyle(
-                                fontSize: 22,
+                                fontSize: 26,
                                 color: Colors.black,
                                 fontWeight: FontWeight.w200),
                           ),
@@ -123,7 +121,6 @@ class _HomePageState extends State<HomePage> {
                           SizedBox(
                             width: 5,
                           ),
-
                         ],
                       )),
                   Stack(
@@ -135,149 +132,126 @@ class _HomePageState extends State<HomePage> {
                             viewportFraction: 0.90,
                             enlargeCenterPage: true,
                             enableInfiniteScroll: false,
-                            height: h * 0.70,
+                            height: h * 0.80,
                             onPageChanged: (int index, reason) {
                               setState(() => listIndex = index);
                             }),
                         items: db.alldata.map((i) {
-                                return Builder(
-                                  builder: (BuildContext context ) {
-                                    return
-                                      // Container(
-                                      //   margin: EdgeInsets.all(6.0),
-                                      //   decoration: BoxDecoration(
-                                      //     borderRadius: BorderRadius.circular(8.0),
-                                      //     image: DecorationImage(
-                                      //       image: NetworkImage(i['image url']),
-                                      //       fit: BoxFit.cover,
-                                      //     ),
-                                      //   ),
-                                      // );
+                          return Builder(
+                            builder: (BuildContext context) {
+                              return
+                                  Container(
+                                width: MediaQuery.of(context).size.width,
+                                margin: EdgeInsets.symmetric(horizontal: 0),
+                                child: InkWell(
+                                  child: CachedNetworkImage(
+                                    imageUrl: i['image url'],
+                                    imageBuilder: (context, imageProvider) =>
+                                        Hero(
+                                      tag: i['timestamp'],
+                                      child: Container(
+                                        margin: EdgeInsets.only(
+                                            left: 10,
+                                            right: 10,
+                                            top: 10,
+                                            bottom: 50),
+                                        decoration: BoxDecoration(
+                                            color: Colors.grey[200],
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            boxShadow: <BoxShadow>[
+                                              BoxShadow(
+                                                  color: Colors.grey.shade300,
+                                                  blurRadius: 30,
+                                                  offset: Offset(5, 20))
+                                            ],
+                                            image: DecorationImage(
+                                                image: imageProvider,
+                                                fit: BoxFit.cover)),
+                                        child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 30, bottom: 40),
+                                            child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              children: <Widget>[
+                                                Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: <Widget>[
+                                                    Text(
+                                                      Config().hashTag,
+                                                      style: TextStyle(
+                                                          decoration:
+                                                              TextDecoration
+                                                                  .none,
+                                                          color: Colors.white,
+                                                          fontSize: 14),
+                                                    ),
 
-                                    Container(
-                                              width: MediaQuery.of(context).size.width,
-                                      margin:
-                                      EdgeInsets.symmetric(horizontal: 0),
-                                      child: InkWell(
-                                        child:
-                                        CachedNetworkImage(
-
-                                        imageUrl: i['image url'],
-                                          imageBuilder:
-                                              (context, imageProvider) =>
-                                              Hero(
-                                                tag: i['timestamp'],
-                                                child: Container(
-                                                  margin: EdgeInsets.only(
-                                                      left: 10,
-                                                      right: 10,
-                                                      top: 10,
-                                                      bottom: 50),
-                                                  decoration: BoxDecoration(
-                                                      color: Colors.grey[200],
-                                                      borderRadius:
-                                                      BorderRadius.circular(
-                                                          20),
-                                                      boxShadow: <BoxShadow>[
-                                                        BoxShadow(
-                                                            color:
-                                                            Colors.grey.shade300,
-                                                            blurRadius: 30,
-                                                            offset: Offset(5, 20))
-                                                      ],
-                                                      image: DecorationImage(
-                                                          image: imageProvider,
-                                                          fit: BoxFit.cover)),
-                                                  child: Padding(
-                                                      padding:
-                                                      const EdgeInsets.only(
-                                                          left: 30,
-                                                          bottom: 40),
-                                                      child: Row(
-                                                        crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .end,
-                                                        children: <Widget>[
-                                                          Column(
-                                                            mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .end,
-                                                            crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                            children: <Widget>[
-                                                              Text(
-                                                                Config().hashTag,
-                                                                style: TextStyle(
-                                                                    decoration:
-                                                                    TextDecoration
-                                                                        .none,
-                                                                    color: Colors
-                                                                        .white,
-                                                                    fontSize: 14),
-                                                              ),
-                                                              Text(
-                                                                i['category'],
-                                                                style: TextStyle(
-                                                                    decoration:
-                                                                    TextDecoration
-                                                                        .none,
-                                                                    color: Colors
-                                                                        .white,
-                                                                    fontSize: 25),
-                                                              )
-                                                            ],
-                                                          ),
-                                                          Spacer(),
-                                                          Icon(
-                                                            Icons.favorite,
-                                                            size: 25,
-                                                            color: Colors.white
-                                                                .withOpacity(0.5),
-                                                          ),
-                                                          SizedBox(width: 2),
-                                                          Text(
-                                                            i['loves'].toString(),
-                                                            style: TextStyle(
-                                                                decoration:
-                                                                TextDecoration
-                                                                    .none,
-                                                                color: Colors
-                                                                    .white
-                                                                    .withOpacity(
-                                                                    0.7),
-                                                                fontSize: 18,
-                                                                fontWeight:
-                                                                FontWeight
-                                                                    .w600),
-                                                          ),
-                                                          SizedBox(
-                                                            width: 15,
-                                                          )
-                                                        ],
-                                                      )),
+                                                    SizedBox(
+                                                      width: 180,
+                                                      child: Text(
+                                                        i['category'],
+                                                        overflow: TextOverflow.ellipsis,
+                                                        softWrap: false,
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 20),
+                                                      ),
+                                                    )
+                                                  ],
                                                 ),
-                                              ),
-                                          placeholder: (context, url) =>
-                                              LoadingWidget(),
-                                          errorWidget:
-                                              (context, url, error) => Icon(
-                                            Icons.error,
-                                            size: 40,
-                                          ),
-                                        ),
-                                        onTap: () {
-                                          print('Moved to the details page');
-                                            Navigator.push(context,
-                                            MaterialPageRoute(
-                                                builder: (context) => DetailsPage(tag: i['timestamp'], imageUrl: i['image url'], catagory: i['category'], timestamp: i['timestamp'])));
-                                        },
-
+                                                Spacer(),
+                                                Icon(
+                                                  Icons.favorite,
+                                                  size: 25,
+                                                  color: Colors.white
+                                                      .withOpacity(0.5),
+                                                ),
+                                                SizedBox(width: 2),
+                                                Text(
+                                                  i['loves'].toString(),
+                                                  style: TextStyle(
+                                                      decoration:
+                                                          TextDecoration.none,
+                                                      color: Colors.white
+                                                          .withOpacity(0.7),
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                ),
+                                                SizedBox(
+                                                  width: 15,
+                                                )
+                                              ],
+                                            )),
                                       ),
-
-                                    );
+                                    ),
+                                    placeholder: (context, url) =>
+                                        LoadingWidget(),
+                                    errorWidget: (context, url, error) => Icon(
+                                      Icons.error,
+                                      size: 40,
+                                    ),
+                                  ),
+                                  onTap: () {
+                                    print('Moved to the details page');
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => DetailsPage(
+                                                tag: i['timestamp'],
+                                                imageUrl: i['image url'],
+                                                catagory: i['category'],
+                                                timestamp: i['timestamp'])));
                                   },
-                                );
+                                ),
+                              );
+                            },
+                          );
                         }).toList(),
                       ),
                       Positioned(
@@ -300,11 +274,11 @@ class _HomePageState extends State<HomePage> {
                             dotsCount: 5,
                             position: listIndex.toDouble(),
                             decorator: DotsDecorator(
-                              activeColor: Colors.black,
-                              color: Colors.black,
+                              activeColor: Colors.blueAccent,
+                              color: Colors.grey[300],
                               spacing: EdgeInsets.all(3),
                               size: const Size.square(8.0),
-                              activeSize: const Size(40.0, 6.0),
+                              activeSize: const Size(18.0, 9.0),
                               activeShape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(5.0)),
                             ),

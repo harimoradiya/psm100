@@ -22,7 +22,7 @@ class _NewItemsState extends State<NewItems> with AutomaticKeepAliveClientMixin 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   late ScrollController controller;
-  late DocumentSnapshot _lastVisible;
+  DocumentSnapshot? _lastVisible;
   late bool _isLoading;
   List<DocumentSnapshot> _data = <DocumentSnapshot>[];
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -47,7 +47,7 @@ class _NewItemsState extends State<NewItems> with AutomaticKeepAliveClientMixin 
       data = await firestore
           .collection('contents')
           .orderBy('timestamp', descending: true)
-          .startAfter([_lastVisible['timestamp']])
+          .startAfter([(_lastVisible as dynamic)['timestamp']])
           .limit(10)
           .get();
 

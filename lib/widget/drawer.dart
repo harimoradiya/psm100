@@ -5,7 +5,11 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:launch_review/launch_review.dart';
 import 'package:provider/provider.dart';
 import 'package:wallpaper/blocs/signin_bloc.dart';
+import 'package:wallpaper/page/bookmark_page.dart';
+import 'package:wallpaper/page/categories_page.dart';
+import 'package:wallpaper/page/explore_page.dart';
 import 'package:wallpaper/page/signin_page.dart';
+import 'package:wallpaper/utils/snacbar.dart';
 
 import '../models/config.dart';
 import '../utils/next_screen.dart';
@@ -28,19 +32,24 @@ class _DrawerWidgetState extends State<DrawerWidget> {
     'Saved Items',
     'About App',
     'Rate & Review',
-    'Privacy Policy'
+    'Privacy Policy',
+    'Logout'
   ];
 
   final List icons = [
     Icons.category_outlined,
-    Icons.wallpaper,
+    FontAwesomeIcons.image,
     Icons.favorite,
     Icons.info,
     Icons.star,
-    Icons.privacy_tip_outlined
+    Icons.privacy_tip_outlined,
+    Icons.logout
   ];
 
   Future openLogoutDialog(context1) async {
+    const snackBar = SnackBar(
+      content: Text('Sorry, You are guest user!'),
+    );
     showDialog(
         context: context1,
         builder: (BuildContext context) {
@@ -55,9 +64,16 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 child: Text('Yes'),
                 onPressed: () async {
                   final sb = context.read<SignInBloc>();
-                  Navigator.pop(context);
-                  sb.userSignOut().then((_) => nextScreenCloseOthers(context, SignInPage(closeDialog: false,)));
-
+                  if(sb.isSignin == true) {
+                    Navigator.pop(context);
+                    sb.userSignOut().then((_) =>
+                        nextScreenCloseOthers(
+                            context, SignInPage(closeDialog: false,)));
+                  }
+                  else{
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    Navigator.pop(context);
+                  }
                 },
               ),
               TextButton(
@@ -77,14 +93,14 @@ class _DrawerWidgetState extends State<DrawerWidget> {
         context: context,
         builder: (BuildContext coontext) {
           return AboutDialog(
-            applicationName: 'Drawer open',
-            applicationVersion: '1.256.845',
+            applicationName: 'PSM100',
+            applicationVersion: '1.112.1412',
             applicationIcon: Image(
               height: 40,
               width: 40,
               image: AssetImage(Config().appIconmain),
             ),
-            applicationLegalese: 'Auth',
+            applicationLegalese: 'Hari Moradiya',
           );
         });
   }
@@ -106,7 +122,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 alignment: Alignment.center,
                 height: 150,
                 child: Text(
-                  "Staggered GridView",
+                  "PSM100",
                   // Config().hashTag.toUpperCase(),
                   style: TextStyle(fontSize: 20),
                 ),
@@ -140,7 +156,25 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       ),
                       onTap: () {
                         Navigator.pop(context);
-                        print(title[index]);
+                        if (index == 0) {
+                          nextScreeniOS(context, CategoriesPage());
+                        } else if (index == 1) {
+                          nextScreeniOS(context, ExplorePage());
+                        } else if (index == 2) {
+
+                          nextScreeniOS(context, BookMarkPage());
+                        } else if (index == 3) {
+                          aboutAppDialog();
+                        } else if (index == 4){
+                          handleRating();
+                        }
+                        else if(index ==5){
+                          print('$index');
+                        }
+                        else if(index ==6){
+                          //Navigator.pop(context);
+                          openLogoutDialog(context);
+                        }
                       },
                     );
                   },
@@ -149,43 +183,43 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   },
                 ),
               ),
-              Column(
-                children: [
-                  Column(
-                    children: [
-                      Divider(),
-                      InkWell(
-                        child: Container(
-                          height: 45,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 15),
-                            child: Row(
-                              children: <Widget>[
-                                Icon(
-                                  Icons.logout,
-                                  color: Colors.grey,
-                                  size: 22,
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Text('Logout',
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500))
-                              ],
-                            ),
-                          ),
-                        ),
-                        onTap: () {
-                          Navigator.pop(context);
-                          openLogoutDialog(context);
-                        },
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+              // Column(
+              //   children: [
+              //     Column(
+              //       children: [
+              //         Divider(),
+              //         InkWell(
+              //           child: Container(
+              //             height: 45,
+              //             child: Padding(
+              //               padding: const EdgeInsets.only(left: 15),
+              //               child: Row(
+              //                 children: <Widget>[
+              //                   Icon(
+              //                     Icons.logout,
+              //                     color: Colors.grey,
+              //                     size: 22,
+              //                   ),
+              //                   SizedBox(
+              //                     width: 20,
+              //                   ),
+              //                   Text('Logout',
+              //                       style: TextStyle(
+              //                           fontSize: 16,
+              //                           fontWeight: FontWeight.w500))
+              //                 ],
+              //               ),
+              //             ),
+              //           ),
+              //           onTap: () {
+              //             Navigator.pop(context);
+              //             openLogoutDialog(context);
+              //           },
+              //         ),
+              //       ],
+              //     ),
+              //   ],
+              // ),
             ],
           )),
     );

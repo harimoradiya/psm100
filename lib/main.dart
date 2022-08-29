@@ -11,13 +11,14 @@ import 'package:wallpaper/blocs/internet_bloc.dart';
 import 'package:wallpaper/blocs/signin_bloc.dart';
 import 'package:wallpaper/blocs/userdata_bloc.dart';
 import 'package:wallpaper/page/home.dart';
+import 'package:wallpaper/page/newsignin_page.dart';
 import 'package:wallpaper/page/signin_page.dart';
 import 'package:wallpaper/widget/drawer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await FlutterDownloader.initialize(debug: true);
+  await FlutterDownloader.initialize(debug: true, ignoreSsl: true);
   runApp(MyApp());
 }
 
@@ -41,11 +42,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<BookmarkBloc>(
           create: (context) => BookmarkBloc(),
         ),
-
         ChangeNotifierProvider<InternetBloc>(
           create: (context) => InternetBloc(),
         ),
-
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -67,28 +66,28 @@ class MyApp extends StatelessWidget {
             ),
             textTheme: TextTheme(
                 headline6: TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'Poppins',
-                  fontWeight: FontWeight.w600,
-                  fontSize: 18,
-                )),
+              color: Colors.black,
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.w600,
+              fontSize: 18,
+            )),
           ),
-          home: MyApp2()
-      ),
+          home: MyApp2()),
     );
   }
 }
+
 class MyApp2 extends StatelessWidget {
   const MyApp2({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-      final signinbloc = context.watch<SignInBloc>();
-      return signinbloc.isSignin == false && signinbloc.guestuser == false
-          ? SignInPage(closeDialog: false) : HomePage();
+    final signinbloc = context.watch<SignInBloc>();
+    return signinbloc.isSignin == false && signinbloc.guestuser == false
+        ? SignInPage(closeDialog: false)
+        : HomePage();
   }
 }
-
 
 class MyStaggeredGridViewScreen extends StatefulWidget {
   @override
