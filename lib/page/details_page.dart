@@ -123,7 +123,7 @@ class _DetailsPageState extends State<DetailsPage> {
                 },
               ),
               SizedBox(
-                height: 30,
+                height: 15,
               ),
               Center(
                 child: TextButton(

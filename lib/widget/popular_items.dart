@@ -58,13 +58,12 @@ class _PopularItemsState extends State<PopularItems>
           _data.addAll(data.docs);
         });
       }
-    } else {
+    }
+
+    else {
       setState(() => _isLoading = false);
-      scaffoldKey.currentState?.showSnackBar(
-        SnackBar(
-          content: Text('No more data!'),
-        ),
-      );
+      print('No more data');
+
     }
     return null;
   }
