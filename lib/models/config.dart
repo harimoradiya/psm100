@@ -6,6 +6,7 @@ class Config {
   final String appIcon = 'assets/images/icon.png';
   final String splashIcon = 'assets/images/splash.png';
   final String appIconmain = 'assets/images/appicon.png';
+  final String personImage = 'https://www.svgrepo.com/show/326296/person.svg';
   final String guestUserImage =
       'http://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png';
 

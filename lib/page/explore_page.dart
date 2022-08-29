@@ -25,32 +25,38 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(60),
-        child: Container(
-          child: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: TabBar(
-                controller: tabController,
-                tabs: <Widget>[
-                  Tab(
-                    child: Text('Popular'),
+      appBar: AppBar(
+        title: Text("Explore",
+        style: TextStyle(color: Colors.black),),
+        bottom: PreferredSize(preferredSize: Size.fromHeight(60),
+            child: Container(
+              child: SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: TabBar(
+                    controller: tabController,
+                    tabs: <Widget>[
+                      Tab(
+                        child: Text('Popular'),
+                      ),
+                      Tab(
+                        child: Text(
+                          'New Arrived',
+                        ),
+                      )
+                    ],
+                    labelColor: Colors.black,
+                    indicatorColor: Colors.grey[900],
+                    unselectedLabelColor: Colors.grey,
                   ),
-                  Tab(
-                    child: Text(
-                      'New Arrived',
-                    ),
-                  )
-                ],
-                labelColor: Colors.black,
-                indicatorColor: Colors.grey[900],
-                unselectedLabelColor: Colors.grey,
+                ),
               ),
-            ),
-          ),
+
         ),
+
       ),
+      ),
+
       body: Column(
         children: [
           Expanded(

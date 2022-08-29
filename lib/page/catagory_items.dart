@@ -41,26 +41,26 @@ class _CatagoryItemState extends State<CatagoryItem> {
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   late ScrollController controller;
-  late DocumentSnapshot _lastVisible;
+  DocumentSnapshot? _lastVisible;
   late bool _isLoading;
   List<DocumentSnapshot> _data = <DocumentSnapshot>[];
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   Future<Null> _getData() async {
     QuerySnapshot data;
-    if (_lastVisible == null)
+    if (_lastVisible == null) {
       data = await firestore
           .collection('contents')
-          .where('category', isEqualTo: selectedCatagory)
+          .where('category',isEqualTo : selectedCatagory)
           .orderBy('timestamp', descending: true)
           .limit(10)
           .get();
-    else
+    } else
       data = await firestore
           .collection('contents')
           .where('category', isEqualTo: selectedCatagory)
           .orderBy('timestamp', descending: true)
-          .startAfter([_lastVisible['timestamp']])
+          .startAfter([(_lastVisible as dynamic)['timestamp']])
           .limit(10)
           .get();
 
@@ -75,7 +75,7 @@ class _CatagoryItemState extends State<CatagoryItem> {
     } else {
       setState(() => _isLoading = false);
       scaffoldKey.currentState?.showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('No more data!'),
         ),
       );
@@ -174,20 +174,17 @@ class _CatagoryItemState extends State<CatagoryItem> {
                   );
                 }
                 return Center(
-
-                )
-                // return Center(
-                //   child: new Opacity(
-                //     opacity: _isLoading ? 1.0 : 0.0,
-                //     child: Center(
-                //       child: new SizedBox(
-                //           width: 32.0,
-                //           height: 32.0,
-                //           child: CupertinoActivityIndicator(
-                //           )),
-                //     ),
-                //   ),
-                // );
+                  child: new Opacity(
+                    opacity: _isLoading ? 1.0 : 0.0,
+                    child: Center(
+                      child: new SizedBox(
+                          width: 32.0,
+                          height: 32.0,
+                          child: CupertinoActivityIndicator(
+                          )),
+                    ),
+                  ),
+                );
               },
               staggeredTileBuilder: (int index) =>
               new StaggeredTile.count(2, index.isEven ? 4 : 3),
@@ -195,7 +192,9 @@ class _CatagoryItemState extends State<CatagoryItem> {
               crossAxisSpacing: 10,
               padding: EdgeInsets.all(15),
             ),
+
           ),
+
         ],
       ),
     );

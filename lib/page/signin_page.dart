@@ -11,7 +11,7 @@ import '../utils/snacbar.dart';
 import 'home.dart';
 
 class SignInPage extends StatefulWidget {
-  SignInPage({Key? key, required this.closeDialog}) : super(key: key);
+  const SignInPage({Key? key, required this.closeDialog}) : super(key: key);
 
   final bool closeDialog;
 
@@ -78,7 +78,7 @@ class _SignInPageState extends State<SignInPage> {
   handleAfterSignupGoogle() {
     Future.delayed(Duration(milliseconds: 1000)).then((f) {
       if (widget.closeDialog == null || widget.closeDialog == false) {
-        nextScreenCloseOthers(context, MyStaggeredGridViewScreen());
+        nextScreenCloseOthers(context, HomePage());
       } else {
         Navigator.pop(context);
       }

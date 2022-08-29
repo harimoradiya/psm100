@@ -52,7 +52,7 @@ dependencies:
   connectivity: ^2.0.2
   cached_network_image: ^2.3.3
   launch_review: ^2.0.0
-  awesome_dialog: ^0.1.4
+#  awesome_dialog: ^0.1.4
 #  onesignal_flutter: ^2.4.1
   shimmer: ^1.1.2
   ext_storage: ^1.0.3
@@ -71,6 +71,20 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^1.0.0
+  flutter_launcher_icons: "^0.8.0"
+  flutter_native_splash: ^0.3.2
+
+
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/appicon.png"
+
+flutter_native_splash:
+  image: assets/images/appicon.png
+  color: "ffffff"
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -87,6 +101,7 @@ flutter:
     - assets/images/icon.png
     - assets/images/splash.png
     - assets/images/appicon.png
+    - assets/images/person.svg
 
   fonts:
 

@@ -40,8 +40,8 @@ class BookMarkPage extends StatelessWidget {
                   if (snapshot.hasData) {
                     if (snapshot.data.length == 0)
                       return EmptyPage(
-                        icon: FontAwesomeIcons.heart,
-                        title: 'No wallpapers found',
+                        icon: FontAwesomeIcons.solidHeart,
+                        title: 'No wallpapers found yet!',
                       );
                     return _buildList(snapshot);
                   } else if (snapshot.hasError) {

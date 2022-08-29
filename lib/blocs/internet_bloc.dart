@@ -6,7 +6,6 @@ class InternetBloc extends ChangeNotifier {
 
   bool get hasInternet => _hasInternet;
 
-
   InternetBloc() {
     // checkInternet();
   }
@@ -17,6 +16,7 @@ class InternetBloc extends ChangeNotifier {
       _hasInternet = false;
     } else {
       _hasInternet = true;
+
     }
     notifyListeners();
   }
